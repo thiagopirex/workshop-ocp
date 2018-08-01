@@ -2,12 +2,13 @@
 echo "<h1>Openshift Workshop v3.0</h1> ";
 echo $_SERVER['SERVER_ADDR'];
 echo "</br>";
-echo "a: ".getenv('DATABASE_URL');
-echo "</br>";
-echo "b: ".$_SERVER('DATABASE_URL');
+$database_url = getenv('DATABASE_URL');
+if (!isset($database_url)) {
+    $database_url ="mysql"; 
+}
 echo "<br><hr>";
 echo "<h2>Cidades cadastradas no Banco de Dados:</h2>";
-$conn = new mysqli("mysql", "redhat", "redhat@123", "workshop");
+$conn = new mysqli($database_url, "redhat", "redhat@123", "workshop");
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
